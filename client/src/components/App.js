@@ -50,18 +50,18 @@ class App extends React.Component {
        this.getTables();
        this.timerGuests = setInterval(() => {
            this.getGuests();
-       }, 30000);
-       this.timerTables = setInterval(() => {
+       }, 60000);
+      /* this.timerTables = setInterval(() => {
             this.getTables();
-        }, 45000);
+        }, 45000); */
 
     }
 
     componentWillUnmount() {
         clearInterval(this.timerGuests);
         this.timerGuests = null;
-        clearInterval(this.timerTables);
-        this.timerTables = null;
+       /* clearInterval(this.timerTables);
+        this.timerTables = null; */
     }
 
     onGuestSelected = (guest) => {
@@ -74,6 +74,7 @@ class App extends React.Component {
                 if(g.CODE === guest.CODE){
                     const currTime = new Date().toLocaleTimeString();
                     g.Present = currTime;
+                    console.log(`Added :${g.Present}`);
                     return g;
                 }else {
                     return g;
