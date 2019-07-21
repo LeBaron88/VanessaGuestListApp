@@ -1,0 +1,22 @@
+{
+    "name": "vanessaGuestList",
+    "version": "2.0.1",
+    "main": "server.js",
+    "scripts": {
+        "client": "cd client && npm start",
+        "server": "nodemon server.js",
+        "dev": "concurrently \"npm run server\" \"npm run client\"",
+        "heroku-postbuild": "cd client && npm install --only=dev && npm install && npm run build"
+    },
+    "keywords": [],
+    "author": "LeBaron",
+    "license": "ISC",
+    "dependencies": {
+        "body-parser": "^1.18.3",
+        "express": "^4.17.1",
+        "nodemon": "^1.19.1"
+    },
+    "devDependencies": {
+        "concurrently": "^4.1.1"
+    }
+}

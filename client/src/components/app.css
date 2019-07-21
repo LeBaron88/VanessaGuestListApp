@@ -1,0 +1,72 @@
+html {
+    background-image: url('../img/bg4.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+#root, body {
+    background: transparent !important;
+    overflow-y: auto;
+}
+
+.segment {
+    background: transparent !important;
+}
+
+.bestGuest {
+    background-image: url('../img/bg6.jpg') !important;   
+}
+
+.card {
+    background-image: url('../img/bg6.jpg') !important;
+    background-size: cover !important;
+    background-position: center !important;
+    border-radius: 15px !important;
+
+}
+
+.guest {
+    cursor: pointer;
+}
+
+.tabSelector-wrapper {
+    overflow-x: scroll;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+}
+.tabSelector {
+    display: inline-block;
+    white-space: nowrap;
+    margin: 0;
+}
+.tabSelector .tables {
+    display: inline-block;
+    white-space: normal;
+    height: 100%;
+}
+
+.content-centered {
+    text-align: center !important;
+}
+
+.guest_avatar {
+    display: inline-block;
+}
+
+.tables {
+    height: 360px !important;
+}
+@media screen and (max-width: 767px) {
+    .guest_avatar {
+        display: none !important;
+    }
+
+    .content-centered {
+        text-align: center !important;
+    }
+    .tables {
+        height: 300px !important;
+    }
+}
+
