@@ -16,7 +16,11 @@ app.use(express.static(path.join(__dirname, 'client/build')));
 
 
 app.get('/api/guest_list', (req, res) => {
-  res.send(guest_list);
+    fs.readFile('./data/guest_list.json', (err, data) => {
+      if (err) throw err;
+      let guests = JSON.parse(data);
+      res.send(guests);
+    });
 });
 
 app.get('/api/tables', (req, res) => {

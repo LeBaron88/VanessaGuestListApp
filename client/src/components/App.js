@@ -7,9 +7,11 @@ import axios from 'axios'
 
 class App extends React.Component {
     
-    state = {bestGuest: {}, isFetchingGuests: true, isFetchingTables: true, guestsToDisplay: [], myGuests: [], selectectedGuest: null, tablesToDisplay: [], tables: []};
+    state = {word : "", bestGuest: {}, isFetchingGuests: true, isFetchingTables: true, guestsToDisplay: [], myGuests: [], selectectedGuest: {}, tablesToDisplay: [], tables: []};
 
     onWordEntered = (word) => {
+
+        this.setState({word});
         const wordLower = word.toLowerCase();
         this.setState({guestsToDisplay: [], tablesToDisplay: []});
         if(word === "") {
@@ -69,25 +71,26 @@ class App extends React.Component {
     }
 
     onArrivalCheck = (guest) => {
-        this.setState(state => {
-            const myGuests = state.myGuests.map(g => {
-                if(g.CODE === guest.CODE){
-                    const currTime = new Date().toLocaleTimeString();
-                    g.Present = currTime;
-                    console.log(`Added :${g.Present}`);
-                    return g;
-                }else {
-                    return g;
-                }
-            });
+        
+        const guests = this.state.myGuests;
+        const myGuests = guests.map(g => {
+            if(g.CODE === guest.CODE){
+                const currTime = new Date().toLocaleTimeString();
+                g.Present = currTime;
+                guest.Present = currTime;
+                return g;
+            }else {
+                return g;
+            }
+        });
 
             axios.post('api/postGuests', this.state.myGuests)
             .then(response => console.log(response))
             .catch(error => console.log(error));
-            
-            return {
-                myGuests,
-            };
+        
+        this.setState({
+            myGuests,
+            selectectedGuest: guest
         });
     }
 
@@ -96,21 +99,18 @@ class App extends React.Component {
         this.setState({isFetchingGuests: true});
         const response = await axios('api/guest_list');
         if(response.status !== 200) throw Error(response.message);
-        const selectectedGuest = !this.state.selectectedGuest ? response.data[1] : this.state.selectectedGuest;
         const myGuests = response.data;
-
-        const guestsToDisplay = this.state.guestsToDisplay.length === 0 ? response.data : this.state.guestsToDisplay;
-
+        
         const bestGuest = myGuests.reduce((pGuest, cGuest) => 
         Date.parse("07/27/2019 " + pGuest.Present) < Date.parse("07/27/2019 " + cGuest.Present) ? pGuest : cGuest);
 
         this.setState({
-            guestsToDisplay,
             myGuests,
-            selectectedGuest,
             bestGuest,
             isFetchingGuests: false
         });
+
+        this.onWordEntered(this.state.word);
         return response.data;
     }
 
